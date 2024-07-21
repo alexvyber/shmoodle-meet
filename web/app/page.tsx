@@ -1,11 +1,16 @@
 "use client"
 
+import { generateRandomWords } from "@/lib/random-words"
 import { isNotNull } from "@/lib/utils"
 import { useEffect, useRef, useState } from "react"
 
 export default function Home() {
   const [count, setCount] = useState(0)
   const socketRef = useRef<null | WebSocket>(null)
+
+  const res = generateRandomWords({ exactly: 5 }).join("-")
+
+  console.log("🚀 ~ Home ~ res:", res)
 
   useEffect(() => {
     if (!socketRef.current) {
