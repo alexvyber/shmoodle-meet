@@ -1,14 +1,14 @@
-import { PayloadAction } from "@reduxjs/toolkit"
+import type { PayloadAction } from "@reduxjs/toolkit"
 import { generateRandomWords } from "../random-words"
 
-type State = {
+type MeetingState = {
   key: string | null
   errors: { key: string | null }
   room: string | null
   ended: boolean
 }
 
-type Action =
+type MeetingAction =
   | PayloadAction<string, "meeting-key">
   | PayloadAction<string, "meeting-key-random">
   | PayloadAction<string, "meeting-errors-clear">
@@ -16,14 +16,14 @@ type Action =
   | PayloadAction<string, "meeting-room">
   | PayloadAction<string, "leave">
 
-const initialState: State = {
+const initialState: MeetingState = {
   key: null,
   errors: { key: null },
   room: null,
   ended: false,
 }
 
-export const meetingReducer = (state = initialState, action: Action) => {
+export const meetingReducer = (state: MeetingState, action: MeetingAction) => {
   switch (action.type) {
     case "meeting-key":
       return { ...state, key: action.payload, ended: false }

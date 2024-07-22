@@ -5,11 +5,13 @@ type ChatState = {
   messages: string[]
 }
 
+type ChatAction = PayloadAction<string, "message"> | PayloadAction<void, "leave">
+
 const initialState: ChatState = {
   messages: [],
 }
 
-export function chatReducer(state: ChatState, action: PayloadAction<string, "message"> | PayloadAction<void, "leave">) {
+export function chatReducer(state: ChatState, action: ChatAction) {
   switch (action.type) {
     case "message":
       return { messages: [...state.messages, action.payload] }
