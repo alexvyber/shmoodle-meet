@@ -4,12 +4,12 @@ import { mediaActions } from "@/store/reudcers/media"
 
 export default async function releaseAudio() {
   const store = getStore()
-  const data = store.getState().media.local.audio
+  const data = store.getState().media.audioStream
 
   if (data) {
     data.getAudioTracks().forEach((t) => t.stop())
     logger.info("audio released")
   }
 
-  store.dispatch(mediaActions.setAudio({ audio: null }))
+  store.dispatch(mediaActions.setAudio(null))
 }

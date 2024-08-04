@@ -14,7 +14,7 @@ export default async function getAudio() {
 
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-    store.dispatch(mediaActions.setAudio({ audio: stream }))
+    store.dispatch(mediaActions.setAudio(stream))
 
     logger.info("audio", stream.id)
   } catch (error) {

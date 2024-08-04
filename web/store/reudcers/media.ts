@@ -20,9 +20,10 @@ type MediaState = {
     consumer: any
   }
 
+  audioStream: null | MediaStream
+  videoStream: null | MediaStream
+
   local: {
-    video: null | MediaStream
-    audio: null | MediaStream
     screen: null | MediaStream
   }
 }
@@ -43,9 +44,10 @@ const initialState: MediaState = {
     audio: false,
   },
 
+  audioStream: null,
+  videoStream: null,
+
   local: {
-    video: null,
-    audio: null,
     screen: null,
   },
 }
@@ -66,12 +68,12 @@ const mediaSlice = createSlice({
       state.devices.audio = action.payload.audio
     },
 
-    setAudio(state, action: PayloadAction<{ audio: any }>) {
-      state.local.audio = action.payload.audio
+    setAudio(state, action: PayloadAction<MediaState["audioStream"]>) {
+      state.audioStream = action.payload
     },
 
-    setVideo(state, action: PayloadAction<{ video: any }>) {
-      state.local.video = action.payload.video
+    setVideo(state, action: PayloadAction<MediaState["videoStream"]>) {
+      state.videoStream = action.payload
     },
 
     setScreen(state, action: PayloadAction<{ screen: any }>) {

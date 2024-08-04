@@ -14,7 +14,7 @@ export default async function getVideo() {
 
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true })
-    store.dispatch(mediaActions.setVideo({ video: stream }))
+    store.dispatch(mediaActions.setVideo(stream))
 
     logger.info("video", stream.id)
   } catch (error) {
