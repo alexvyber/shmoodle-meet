@@ -20,11 +20,17 @@ export function makeStore() {
       getDefaultMiddleware({
         serializableCheck: {
           // Ignore these action types
-          ignoredActions: ["media/setVideo", "media/setTransports"],
+          ignoredActions: ["media/setVideo", "media/setAudio", "media/setTransports"],
           // // Ignore these field paths in all actions
           ignoredActionPaths: ["payload.device"],
           // // Ignore these paths in the state
-          ignoredPaths: ["media.device", "media.transports.producer", "media.transports.consumer", "media.local.video"],
+          ignoredPaths: [
+            "media.device",
+            "media.transports.producer",
+            "media.transports.consumer",
+            "media.videoStream",
+            "media.audioStream",
+          ],
         },
       }),
   })
