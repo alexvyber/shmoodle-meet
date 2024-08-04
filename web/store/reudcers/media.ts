@@ -66,7 +66,7 @@ const mediaSlice = createSlice({
       state.devices.audio = action.payload.audio
     },
 
-    setDudio(state, action: PayloadAction<{ audio: any }>) {
+    setAudio(state, action: PayloadAction<{ audio: any }>) {
       state.local.audio = action.payload.audio
     },
 
