@@ -82,7 +82,7 @@ export default function ApplicationLayout({ children }: React.PropsWithChildren)
             </NavbarItem>
             <Dropdown>
               <DropdownButton as={NavbarItem}>
-                <Avatar square />
+                <Avatar square={true} />
               </DropdownButton>
               <DropdownMenu
                 className="min-w-64"

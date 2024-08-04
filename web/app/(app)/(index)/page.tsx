@@ -4,30 +4,9 @@ import { Button } from "@/components/ui/button"
 import { Divider } from "@/components/ui/divider"
 import { Heading, Subheading } from "@/components/ui/heading"
 import { Input, InputGroup } from "@/components/ui/input"
-import { isNotNull } from "@/lib/utils"
 import { LinkIcon } from "@heroicons/react/20/solid"
-import { useEffect, useRef, useState } from "react"
 
 export default function Home() {
-  const [count, setCount] = useState(0)
-  const socketRef = useRef<null | WebSocket>(null)
-
-  useEffect(() => {
-    if (!socketRef.current) {
-      const socket = new WebSocket("ws://localhost:7070")
-
-      socket.onopen = (e) => {
-        socket.send("Hello Server!")
-      }
-
-      socket.addEventListener("message", (event) => {
-        console.info(event.data)
-      })
-
-      socketRef.current = socket
-    }
-  }, [])
-
   return (
     <div className="flex h-full items-center justify-center flex-col gap-8">
       <section className="flex h-full items-center justify-center flex-col gap-8">
@@ -48,7 +27,7 @@ export default function Home() {
             </InputGroup>
             <Button
               variant="solid"
-              disabled
+              disabled={true}
             >
               Join
             </Button>
@@ -61,17 +40,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <button
-        onClick={() => {
-          setCount((prev) => prev + 1)
-
-          if (isNotNull(socketRef.current)) {
-            socketRef.current.send(`asdas  ${count}`)
-          }
-        }}
-      >
-        click {count}
-      </button>
     </div>
   )
 }

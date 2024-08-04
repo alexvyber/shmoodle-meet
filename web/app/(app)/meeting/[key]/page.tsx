@@ -1,6 +1,11 @@
 "use client"
 
+import { LocalVideo } from "@/components/common/video"
+import { Drawer } from "@/components/ui/drawer"
 import { Text } from "@/components/ui/text"
+import { type UseBoolean, useBoolean } from "@/hooks/use-boolean"
+import { useAppSelector } from "@/hooks/use-store"
+import { genRoomKey } from "@/lib/utils"
 import { cx } from "cvax"
 import {
   ChevronUpIcon,
@@ -22,42 +27,59 @@ import {
 import { DateTime } from "luxon"
 import type React from "react"
 import { useState } from "react"
+import { VideoToggle } from "../components/video-toggle"
+import { sendMessage } from "@/lib/socket.io"
 
 export default function MeetingPage() {
+  const chat = useBoolean()
+
   return (
-    <div className="flex flex-col justify-center w-full  h-full ">
-      <div className="pt-4  max-w-[80vw] mx-auto w-full h-full">
-        <div className="bg-zinc-500 max-w-[90vw] mx-auto w-full h-full" />
+    <>
+      <div className="flex flex-col justify-center w-full  h-full ">
+        <div className=" h-full flex gap-4 pt-4 ">
+          <LocalVideo />
+          <div className="bg-zinc-500  mx-auto w-full h-full max-w-[80vw] rounded" />
+        </div>
+
+        <div className="flex justify-between gap-2 items-center  px-4 py-2">
+          <div className="flex gap-3 items-center font-medium w-full">
+            <div>{DateTime.now().toLocaleString(DateTime.TIME_SIMPLE)}</div>
+            <Text>|</Text>
+            <div>{"qvz-uqsz-euc"}</div>
+          </div>
+
+          <div className=" p-2 rounded-md flex justify-center gap-2.5 w-full">
+            <Settings>
+              <MicroButton />
+            </Settings>
+            <Settings>
+              <VideoToggle />
+            </Settings>
+
+            <EmojiButton />
+            <PointerButton />
+            <PresentButton />
+            <EndCallButton />
+          </div>
+
+          <button
+            onClick={async () => {
+              sendMessage(genRoomKey())
+            }}
+          >
+            message
+          </button>
+
+          <div className="w-full flex items-center justify-end gap-2.5">
+            <ChatButton boolean={chat} />
+            <UsersButton />
+            <InfoButton />
+          </div>
+        </div>
       </div>
 
-      <div className="flex justify-between gap-2 items-center  px-4 py-2">
-        <div className="flex gap-3 items-center font-medium w-full">
-          <div>{DateTime.now().toLocaleString(DateTime.TIME_SIMPLE)}</div>
-          <Text>|</Text>
-          <div>{"qvz-uqsz-euc"}</div>
-        </div>
-
-        <div className=" p-2 rounded-md flex justify-center gap-2.5 w-full">
-          <Settings>
-            <MicroButton />
-          </Settings>
-          <Settings>
-            <VideoButton />
-          </Settings>
-
-          <EmojiButton />
-          <PointerButton />
-          <PresentButton />
-          <EndCallButton />
-        </div>
-
-        <div className="w-full flex items-center justify-end gap-2.5">
-          <ChatButton />
-          <UsersButton />
-          <InfoButton />
-        </div>
-      </div>
-    </div>
+      <Chat boolean={chat} />
+    </>
   )
 }
 
@@ -172,19 +194,21 @@ function PointerButton() {
   )
 }
 
-function ChatButton() {
-  const [active, setActive] = useState(false)
-
+function ChatButton({ boolean }: { boolean: UseBoolean }) {
   return (
     <button
-      onClick={() => setActive((p) => !p)}
+      onClick={boolean.toggle}
       className={cx(
         buttonSizing,
-        active ? "bg-blue-500  hover:bg-blue-600" : "bg-zinc-700 hover:bg-zinc-600",
+        boolean.state ? "bg-blue-500  hover:bg-blue-600" : "bg-zinc-700 hover:bg-zinc-600",
         " transition duration-200 rounded-full flex justify-center items-center"
       )}
     >
-      {active ? <MessageSquareTextIcon className={cx(iconSizing)} /> : <MessageSquareIcon className={cx(iconSizing)} />}
+      {boolean.state ? (
+        <MessageSquareTextIcon className={cx(iconSizing)} />
+      ) : (
+        <MessageSquareIcon className={cx(iconSizing)} />
+      )}
     </button>
   )
 }
@@ -220,5 +244,23 @@ function InfoButton() {
     >
       <InfoIcon className={cx(iconSizing)} />
     </button>
+  )
+}
+
+function Chat({ boolean }: { boolean: UseBoolean }) {
+  const messages = useAppSelector((s) => s.chat.messages)
+
+  return (
+    <Drawer
+      open={boolean.state}
+      setOpen={boolean.setState}
+      side="right"
+    >
+      <div className="flex flex-col gap-1 text-sm w-full h-full">
+        {messages.map((message) => (
+          <div className="text-black">{message}</div>
+        ))}
+      </div>
+    </Drawer>
   )
 }
