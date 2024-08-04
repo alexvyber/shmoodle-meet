@@ -1,87 +1,64 @@
 "use client"
+
+import { useAppSelector } from "@/hooks/use-store"
 import { cx } from "cvax"
-import { useCallback, useEffect, useState } from "react"
+import React, { createRef, useEffect, useRef } from "react"
 
 const buttonSizing = "w-10 h-10"
 
 export function AudioVizualizer() {
-  const [context] = useState(() => new AudioContext())
-  const [analyser, setAnalyser] = useState<AnalyserNode>()
-  //   const audioStream = useAppSelector((state) => state.media.audioStream)!
-  const [audioStream, setaudioStream] = useState<MediaStream>()
-
-  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder>()
+  const audioStream = useAppSelector((state) => state.media.audioStream)
+  const refs = useRef<React.RefObject<HTMLDivElement>[]>([createRef(), createRef(), createRef()])
 
   useEffect(() => {
-    async function some() {
-      const devices = await navigator.mediaDevices.enumerateDevices()
-      console.log("🚀 ~ some ~ devices:", devices)
+    if (!(audioStream instanceof MediaStream)) return
 
-      const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true })
-      console.log("🚀 ~ some ~ audioStream:", audioStream)
-      setaudioStream(audioStream)
+    const audioContext = new AudioContext()
+    const analyser = audioContext.createAnalyser()
+    const microphone = audioContext.createMediaStreamSource(audioStream)
+    microphone.connect(analyser)
+
+    const bFrequencyData = new Uint8Array(analyser.frequencyBinCount)
+
+    function draw() {
+      setTimeout(() => requestAnimationFrame(draw), 50)
+
+      analyser.getByteFrequencyData(bFrequencyData)
+
+      // naive way to get audio level
+      const level = bFrequencyData.reduce((acc, cur) => acc + cur, 0) / bFrequencyData.length
+
+      refs.current.map((ref, i) => ref.current?.style.setProperty("height", `${calculateHeight(i, level)}px`))
     }
 
-    some()
-  }, [])
+    draw()
 
-  useEffect(() => {
-    if (!audioStream) return
-
-    const recorder = new MediaRecorder(audioStream)
-    recorder.start()
-    setMediaRecorder(recorder)
-
-    return () => recorder.stop()
+    return () => {
+      audioContext.close()
+      analyser.disconnect()
+      microphone.disconnect()
+    }
   }, [audioStream])
 
-  useEffect(() => {
-    if (!mediaRecorder?.stream) return
+  return (
+    <div className={cx("bg-blue-500 rounded-full py-2 px-2.5 flex items-center justify-between", buttonSizing)}>
+      {Array.from({ length: 3 }, (_, i) => (
+        <div
+          key={i}
+          ref={refs.current[i]}
+          className="bg-white w-1 min-h-2 rounded "
+        />
+      ))}
+    </div>
+  )
+}
 
-    console.log("🚀 ~ useEffect ~ mediaRecorder?.stream:", mediaRecorder?.stream)
-
-    const analyserNode = context.createAnalyser()
-    setAnalyser(analyserNode)
-
-    analyserNode.fftSize = 2048
-    // analyserNode.minDecibels = -31
-    // analyserNode.maxDecibels = -100
-    analyserNode.smoothingTimeConstant = 0.4
-    const source = context.createMediaStreamSource(mediaRecorder.stream)
-    source.connect(analyserNode)
-
-    return () => source.disconnect()
-  }, [mediaRecorder?.stream])
-
-  const report = useCallback(() => {
-    if (!(analyser && mediaRecorder)) return
-
-    const data = new Uint8Array(analyser?.frequencyBinCount)
-    const myDataArray = new Float32Array(analyser.frequencyBinCount)
-
-    switch (mediaRecorder.state) {
-      case "recording": {
-        analyser.getByteFrequencyData(data)
-        // console.log("🚀 ~ report ~ data:", data)
-        console.log(data.filter((i) => i > 0).length)
-        requestAnimationFrame(report)
-        break
-      }
-
-      case "paused":
-        //   processFrequencyData(data)
-        break
-
-      case "inactive":
-        context.state !== "closed" && context.close()
-    }
-  }, [mediaRecorder, analyser, context.state])
-
-  useEffect(() => {
-    if (analyser && mediaRecorder?.state === "recording") {
-      report()
-    }
-  }, [analyser, mediaRecorder?.state])
-
-  return <div className={cx("bg-blue-500 rounded-full", buttonSizing)} />
+function calculateHeight(index: number, level: number) {
+  return (
+    // Minimal value: either calculated or max for given bar
+    Math.min(
+      (level / 100) * (index === 1 ? 2 : 1) * 24, // if central bar than bar is 2 times higher
+      index % 2 === 0 ? 18 : 24 // if bar on the side, bar's max lower than center's
+    )
+  )
 }
