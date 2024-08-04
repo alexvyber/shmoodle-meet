@@ -1,22 +1,27 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.8.1/schema.json",
-  "organizeImports": { "enabled": true },
+  "organizeImports": {
+    "enabled": true
+  },
   "javascript": {
     "formatter": {
       "semicolons": "asNeeded",
       "trailingCommas": "es5",
       "arrowParentheses": "always"
+    },
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
     }
   },
   "formatter": {
     "lineWidth": 120,
     "indentStyle": "space",
     "indentWidth": 2,
-    "ignore": ["dist", "build", "node_modules", "__generated__", ".next"],
+    "ignore": ["dist", "build", "node_modules", "__generated__", ".next", "bin"],
     "attributePosition": "multiline"
   },
   "linter": {
-    "ignore": ["dist", "build", "node_modules", "__generated__", ".next"],
+    "ignore": ["dist", "build", "node_modules", "__generated__", ".next", "bin"],
     "enabled": true,
     "rules": {
       "recommended": true,
@@ -26,16 +31,16 @@
         "useForOf": "warn",
         "useTemplate": "error",
         "noArguments": "warn",
-        "useImportType": "error",
+        "useImportType": "off",
         "noUselessElse": "error",
         "useExportType": "error",
         "noNegationElse": "warn",
         "noCommaOperator": "error",
         "noDefaultExport": "off",
         "noShoutyConstants": "warn",
-        "noImplicitBoolean": "off",
+        "noImplicitBoolean": "error",
         "noInferrableTypes": "warn",
-        "noParameterAssign": "error",
+        "noParameterAssign": "off",
         "useFragmentSyntax": "error",
         "noNonNullAssertion": "info",
         "useBlockStatements": "off",
@@ -64,7 +69,7 @@
       "complexity": {
         "noVoid": "off",
         "noWith": "error",
-        "noForEach": "error",
+        "noForEach": "off",
         "useFlatMap": "error",
         "noBannedTypes": "error",
         "useLiteralKeys": "error",
@@ -88,20 +93,22 @@
         "noUselessTypeConstraint": "error",
         "noExcessiveNestedTestSuites": "error",
         "noUselessLoneBlockStatements": "error",
-        "useSimplifiedLogicExpression": "off",
+        "useSimplifiedLogicExpression": "error",
         "noMultipleSpacesInRegularExpressionLiterals": "error",
         "noExcessiveCognitiveComplexity": {
           "level": "warn",
-          "options": { "maxAllowedComplexity": 10 }
+          "options": {
+            "maxAllowedComplexity": 20
+          }
         }
       },
       "suspicious": {
-        "useAwait": "error",
+        "useAwait": "off",
         "useIsArray": "error",
         "noDebugger": "warn",
         "noRedeclare": "error",
         "noConstEnum": "warn",
-        "noConsoleLog": "warn",
+        "noConsoleLog": "off",
         "noGlobalIsNan": "error",
         "noSelfCompare": "error",
         "noSparseArray": "error",
@@ -121,12 +128,12 @@
         "noFunctionAssign": "error",
         "noUnsafeNegation": "error",
         "noImplicitAnyLet": "error",
-        "noEmptyInterface": "warn",
+        "noEmptyInterface": "off",
         "noCompareNegZero": "error",
         "noConfusingLabels": "error",
         "noPrototypeBuiltins": "error",
         "useNamespaceKeyword": "error",
-        "noConfusingVoidType": "off",
+        "noConfusingVoidType": "error",
         "noDuplicateJsxProps": "error",
         "noRedundantUseStrict": "error",
         "noDuplicateParameters": "error",
@@ -160,7 +167,7 @@
         "noUnsafeFinally": "error",
         "noUnusedImports": "error",
         "useArrayLiterals": "error",
-        "noVoidTypeReturn": "off",
+        "noVoidTypeReturn": "error",
         "useHookAtTopLevel": "error",
         "noUnusedVariables": "off",
         "noFlatMapIdentity": "error",
@@ -181,7 +188,7 @@
         "useExhaustiveDependencies": "warn",
         "noInvalidConstructorSuper": "error",
         "noConstantMathMinMaxClamp": "error",
-        "noVoidElementsWithChildren": "off",
+        "noVoidElementsWithChildren": "error",
         "noUnusedPrivateClassMembers": "error",
         "noEmptyCharacterClassInRegex": "error",
         "noInvalidUseBeforeDeclaration": "warn"
@@ -195,9 +202,9 @@
       },
       "performance": {
         "noAccumulatingSpread": "error",
-        "noBarrelFile": "error",
+        "noBarrelFile": "off",
         "noDelete": "error",
-        "noReExportAll": "error"
+        "noReExportAll": "off"
       }
     }
   }
