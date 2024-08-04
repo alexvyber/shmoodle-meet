@@ -11,7 +11,7 @@ const buttonSizing = "w-10 h-10"
 
 export function VideoToggle() {
   const isAvailable = useAppSelector((state) => state.media.devices.video)
-  const isActive = useAppSelector((state) => !!state.media.local.video)
+  const isActive = useAppSelector((state) => !!state.media.videoStream)
 
   return (
     <button
