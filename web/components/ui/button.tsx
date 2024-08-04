@@ -18,6 +18,9 @@ const variants = cvax({
     "[&>[data-slot=icon]]:-mx-0.5 [&>[data-slot=icon]]:my-0.5 [&>[data-slot=icon]]:size-5 [&>[data-slot=icon]]:shrink-0 [&>[data-slot=icon]]:text-[--btn-icon] [&>[data-slot=icon]]:sm:my-1 [&>[data-slot=icon]]:sm:size-4 forced-colors:[--btn-icon:ButtonText] forced-colors:data-[hover]:[--btn-icon:ButtonText]",
   ],
   variants: {
+    size: {
+      lg: "h-12 !px-6 !text-lg",
+    },
     variant: {
       solid: [
         // Optical border, implemented as the button background to avoid corner artifacts
@@ -174,10 +177,10 @@ type ButtonProps = { className?: string; children: React.ReactNode } & (
   VariantProps<typeof variants>
 
 export const Button = forwardRef(function Button(
-  { color, className, children, variant, ...props }: ButtonProps,
+  { children, className, ...props }: ButtonProps,
   ref: React.ForwardedRef<HTMLElement>
 ) {
-  const classes = variants({ className, color, variant })
+  const classes = variants({ className, ...props })
 
   return "href" in props ? (
     <Link
