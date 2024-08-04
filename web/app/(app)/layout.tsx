@@ -12,6 +12,7 @@ import { canProduce } from "@/lib/media/media-utils"
 import { mediaActions } from "@/store/reudcers/media"
 import getVideo from "@/lib/media/get-video"
 import { socket, socketRequest } from "@/lib/socket.io/socket-io"
+import getAudio from "@/lib/media/get-audio"
 
 export default function AppLayout({ children }: React.PropsWithChildren) {
   useEffect(() => {
@@ -264,6 +265,7 @@ export default function AppLayout({ children }: React.PropsWithChildren) {
       store.dispatch(mediaActions.setTransports({ producerTransport, consumerTransport }))
 
       await getVideo()
+      await getAudio()
     }
 
     setupMedia()

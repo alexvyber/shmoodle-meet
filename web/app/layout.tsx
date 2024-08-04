@@ -18,9 +18,9 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
     <StoreProvider>
       <html
         lang="en"
-        className={`${GeistSans.className} text-zinc-950 antialiased lg:bg-zinc-100 dark:bg-zinc-900 dark:text-white dark:lg:bg-zinc-950`}
+        className={`${GeistSans.className} text-zinc-950 antialiased  dark:bg-zinc-900 dark:text-white dark:lg:bg-zinc-950 h-full`}
       >
-        <body>{children}</body>
+        <body className="h-full">{children}</body>
       </html>
     </StoreProvider>
   )

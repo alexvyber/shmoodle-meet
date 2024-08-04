@@ -3,7 +3,7 @@
 import { useAppSelector } from "@/hooks/use-store"
 import { useEffect, useRef } from "react"
 
-export function LocalVideo() {
+export function VideoPreview() {
   const videoRef = useRef<React.ElementRef<"video"> | null>(null)
   const videoStream = useAppSelector((state) => state.media.videoStream)
 
@@ -31,11 +31,12 @@ export function LocalVideo() {
       ref={videoRef}
       playsInline={true}
       muted={true}
+      className="rounded-xl"
       style={{
-        width: 320,
-        height: 192,
+        width: 720,
+        height: 420,
         objectFit: "cover",
-        background: "black",
+
         transform: "rotateY(180deg)",
       }}
     />

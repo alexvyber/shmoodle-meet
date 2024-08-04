@@ -1,31 +1,22 @@
 "use client"
-
-import { LocalVideo } from "@/components/common/video"
 import { Text } from "@/components/ui/text"
 import { useBoolean } from "@/hooks/use-boolean"
-import { genRoomKey } from "@/lib/utils"
-import { DateTime } from "luxon"
 import { VideoToggle } from "../components/video-toggle"
-import { sendMessage } from "@/lib/socket.io"
-import {
-  Chat,
-  ChatButton,
-  EmojiButton,
-  EndCallButton,
-  InfoButton,
-  MicroButton,
-  PointerButton,
-  PresentButton,
-  Settings,
-  UsersButton,
-} from "../components/meeting-ui"
+import { MicroButton } from "../components/meeting-ui"
+import { Button } from "@/components/ui/button"
+import { VideoPreview } from "./components/video-preview"
+import { Heading } from "@/components/ui/heading"
+import { AudioVizualizer } from "@/components/common/audio-vizualizer"
 
 export default function MeetingPage() {
   const chat = useBoolean()
 
   return (
     <>
-      <div className="flex flex-col justify-center w-full  h-full ">
+      {/* Joining screen */}
+
+      {/* Meeting screen */}
+      {/* <div className="flex flex-col justify-center w-full  h-full ">
         <div className=" h-full flex gap-4 pt-4 ">
           <LocalVideo />
           <div className="bg-zinc-500  mx-auto w-full h-full max-w-[80vw] rounded" />
@@ -62,7 +53,41 @@ export default function MeetingPage() {
         </div>
       </div>
 
-      <Chat boolean={chat} />
+      <Chat boolean={chat} /> */}
+
+      <div className="flex justify-center items-center w-full h-full gap-12">
+        <div className="relative  w-[720px] h-[420px]">
+          <div className="absolute top-0 left-0">
+            <VideoPreview />
+          </div>
+          <div
+            // controller holder
+            className="absolute bottom-0 left-0 w-full px-4 pb-4"
+          >
+            <div className="flex justify-between w-full items-center">
+              <Text className="text-white font-medium">Some Name</Text>
+              <div className=" flex gap-2">
+                <MicroButton />
+                <VideoToggle />
+              </div>
+
+              <AudioVizualizer />
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-4 justify-center px-20">
+          <Heading>Ready to join?</Heading>
+          <div className="flex gap-2">
+            <Button
+              size="lg"
+              variant="solid"
+            >
+              Join
+            </Button>
+            <Button size="lg">Present</Button>
+          </div>
+        </div>
+      </div>
     </>
   )
 }
