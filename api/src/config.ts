@@ -1,4 +1,4 @@
-import { RtpCodecCapability, WorkerLogLevel } from "mediasoup/node/lib/types.js"
+import type { RtpCodecCapability, WorkerLogLevel } from "mediasoup/node/lib/types.js"
 import { logger } from "./logger.js"
 
 await validateEnv()
@@ -39,7 +39,8 @@ export const config = {
   mediasoupLogLevel: process.env.API_MEDIASOUP_LOG_LEVEL as WorkerLogLevel,
 } satisfies Config
 
-// Stupidly simple env validation doesn't require to install library
+// REFACTOR: custom validation doesn't look simple enough to keep this shit...
+// so, may just use valibot?
 async function validateEnv() {
   try {
     required("API_PORT")
@@ -62,9 +63,8 @@ function integer(name: string) {
 
   if (
     typeof process.env?.[name] !== "string" ||
-    // @ts-expect-error we are using coercion to catch things that `parseInt` will fix for us
-    isNaN(process.env?.[name]) ||
-    isNaN(parseInt(process.env?.[name]))
+    Number.isNaN(process.env?.[name]) ||
+    Number.isNaN(Number.parseInt(process.env?.[name]))
   ) {
     throw new Error(`${name} env variable must be of type integer`)
   }

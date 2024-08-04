@@ -5,25 +5,33 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "node --watch --import=tsx ./src/server/index.ts",
+    "dev": "node --env-file=.env --watch --import=tsx ./src/index.ts",
     "build": "swc ./index.ts -o dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "biome format --write .",
+    "lint": "biome lint --write .",
+    "lint:unsafe": "biome lint --write --unsafe ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@swc/cli": "^0.4.0",
-    "@swc/core": "^1.7.0",
-    "@types/node": "^20.14.11",
-    "tsx": "^4.16.2",
-    "typescript": "^5.5.3"
+    "@swc/core": "^1.7.6",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.1.0",
+    "tsx": "^4.16.5",
+    "typescript": "^5.5.4"
   },
   "dependencies": {
-    "@types/ws": "^8.5.11",
-    "mediasoup": "^3.14.8",
-    "pino": "^9.3.1",
-    "pino-pretty": "^11.2.1",
+    "@types/ws": "^8.5.12",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mediasoup": "^3.14.9",
+    "pino": "^9.3.2",
+    "pino-pretty": "^11.2.2",
+    "socket.io": "^4.7.5",
     "ws": "^8.18.0"
   },
   "packageManager": "pnpm@8.15.1+sha1.8adba2d20330c02d3856e18c4eb3819d1d3ca6aa"

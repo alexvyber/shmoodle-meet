@@ -1,14 +1,14 @@
-import mediasoup from "mediasoup"
+import { createWorker, getSupportedRtpCapabilities, type types } from "mediasoup"
 import { createWebRtcTransport } from "./create-web-rtc-transport.js"
-
+import { createConsumer } from "./create-consumer.js"
 import { config } from "../config.js"
 import { logger } from "../logger.js"
 
-let worker: mediasoup.types.Worker<mediasoup.types.AppData>
-let router: mediasoup.types.Router<mediasoup.types.AppData>
+let worker: types.Worker
+let router: types.Router
 
 const init = async () => {
-  worker = await mediasoup.createWorker({
+  worker = await createWorker({
     rtcMinPort: config.rtcMinPort,
     rtcMaxPort: config.rtcMaxPort,
     logLevel: config.mediasoupLogLevel,
@@ -30,19 +30,20 @@ const getWorker = () => worker
 
 const getRouter = () => router
 
-const Mediasoup = {
+export const Mediasoup = {
   init,
   createWebRtcTransport,
-
+  createConsumer,
   getWorker,
   getRouter,
-  rtpCapabilities: mediasoup.getSupportedRtpCapabilities(),
-  transports: { producer: [], consumer: [] },
-  producers: {},
-  activeProducers: [],
-  consumers: {},
-  peers: {},
-  room: { "user-id": "room-key" },
+  rtpCapabilities: getSupportedRtpCapabilities(),
+  transports: {
+    producer: [] as any as Record<string, types.WebRtcTransport>,
+    consumer: [] as any as Record<string, types.WebRtcTransport>,
+  },
+  producers: {} as Record<string, any>,
+  activeProducers: {} as Record<string, any[]>,
+  consumers: {} as Record<string, any>,
+  peers: {} as Record<string, any>,
+  room: { "user-id": "room-key" } as Record<string, string>,
 }
-
-export default Mediasoup

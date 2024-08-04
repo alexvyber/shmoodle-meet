@@ -1,9 +1,7 @@
-import type * as mediasoup from "mediasoup"
+import type { types } from "mediasoup"
 import { config } from "../config.js"
 
-export const createWebRtcTransport = async ({
-  router,
-}: { router: mediasoup.types.Router<mediasoup.types.AppData> }) => {
+export const createWebRtcTransport = async ({ router }: { router: types.Router }) => {
   const transport = await router.createWebRtcTransport({
     listenIps: [config.ipAddress],
     enableUdp: true,
