@@ -1,10 +1,10 @@
 import { mediaActions } from "@/store/reudcers/media"
 import { logger } from "../utils"
-import releaseScreen from "./release-screen"
+import { releaseScreen } from "./release-screen"
 import { getStore } from "@/store"
 import { toast } from "sonner"
 
-export default async function getScreen() {
+export async function getScreen() {
   const store = getStore()
 
   try {

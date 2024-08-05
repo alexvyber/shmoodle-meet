@@ -2,7 +2,7 @@ import { mediaActions } from "@/store/reudcers/media"
 import { getStore } from "../../store"
 import { logger } from "../utils"
 
-export default async function releaseScreen() {
+export async function releaseScreen() {
   const store = getStore()
   const data = store.getState().media.local.screen
 

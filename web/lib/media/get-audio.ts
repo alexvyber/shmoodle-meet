@@ -1,10 +1,10 @@
 import { logger } from "../utils"
-import releaseAudio from "./release-audio"
+import { releaseAudio } from "./release-audio"
 import { getStore } from "@/store"
 import { toast } from "sonner"
 import { mediaActions } from "@/store/reudcers/media"
 
-export default async function getAudio() {
+export async function getAudio() {
   const store = getStore()
   const { device } = store.getState().media
 

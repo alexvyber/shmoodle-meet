@@ -1,10 +1,10 @@
 import { getStore } from "@/store"
 import { logger } from "../utils"
-import releaseVideo from "./release-video"
+import { releaseVideo } from "./release-video"
 import { toast } from "sonner"
 import { mediaActions } from "@/store/reudcers/media"
 
-export default async function getVideo() {
+export async function getVideo() {
   const store = getStore()
   const { device } = store.getState().media
 
