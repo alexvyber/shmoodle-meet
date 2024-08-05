@@ -20,13 +20,19 @@ export function AudioVizualizer() {
 
     const bFrequencyData = new Uint8Array(analyser.frequencyBinCount)
 
+    const logLevel = getLogLevel()
+
     function draw() {
       setTimeout(() => requestAnimationFrame(draw), 50)
 
       analyser.getByteFrequencyData(bFrequencyData)
 
+      analyser.fftSize = 2 ** 9
+
       // naive way to get audio level
       const level = bFrequencyData.reduce((acc, cur) => acc + cur, 0) / bFrequencyData.length
+
+      // logLevel(level)
 
       refs.current.map((ref, i) => ref.current?.style.setProperty("height", `${calculateHeight(i, level)}px`))
     }
@@ -41,12 +47,12 @@ export function AudioVizualizer() {
   }, [audioStream])
 
   return (
-    <div className={cx("bg-blue-500 rounded-full py-2 px-2.5 flex items-center justify-between", buttonSizing)}>
+    <div className={cx("bg-blue-500 rounded-full py-2 px-2 flex items-center justify-between gap-1", buttonSizing)}>
       {Array.from({ length: 3 }, (_, i) => (
         <div
           key={i}
           ref={refs.current[i]}
-          className="bg-white w-1 min-h-2 rounded "
+          className="bg-white w-1.5 min-h-1.5 rounded "
         />
       ))}
     </div>
@@ -57,8 +63,18 @@ function calculateHeight(index: number, level: number) {
   return (
     // Minimal value: either calculated or max for given bar
     Math.min(
-      (level / 100) * (index === 1 ? 2 : 1) * 24, // if central bar than bar is 2 times higher
+      (level / 15) * (index === 1 ? 2 : 1) * 24, // if central bar than bar is 2 times higher
       index % 2 === 0 ? 18 : 24 // if bar on the side, bar's max lower than center's
     )
   )
+}
+
+// tmp helper
+function getLogLevel() {
+  let max = 0
+  return function logLevel(level: number) {
+    level > max && (max = level)
+
+    console.log({ level, max })
+  }
 }
