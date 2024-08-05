@@ -27,7 +27,10 @@ export function Alert({
   className,
   children,
   ...props
-}: Omit<Headless.DialogProps, "className"> & React.PropsWithChildren & VariantProps<typeof variants> & ClassNameProps) {
+}: Omit<Headless.DialogProps, "className"> &
+  React.PropsWithChildren &
+  VariantProps<typeof variants> &
+  Vyber.PropsWithClassname) {
   return (
     <Headless.Dialog {...props}>
       <Headless.DialogBackdrop
