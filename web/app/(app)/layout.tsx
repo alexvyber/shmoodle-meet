@@ -10,9 +10,9 @@ import { toast } from "sonner"
 import * as mediasoup from "mediasoup-client"
 import { canProduce } from "@/lib/media/media-utils"
 import { mediaActions } from "@/store/reudcers/media"
-import getVideo from "@/lib/media/get-video"
+import { getVideo } from "@/lib/media/get-video"
 import { socket, socketRequest } from "@/lib/socket.io/socket-io"
-import getAudio from "@/lib/media/get-audio"
+import { getAudio } from "@/lib/media/get-audio"
 
 export default function AppLayout({ children }: React.PropsWithChildren) {
   useEffect(() => {

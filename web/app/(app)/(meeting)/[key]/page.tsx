@@ -1,12 +1,12 @@
 "use client"
-import { Text } from "@/components/ui/text"
 import { useBoolean } from "@/hooks/use-boolean"
 import { VideoToggle } from "../components/video-toggle"
-import { MicroButton } from "../components/meeting-ui"
 import { Button } from "@/components/ui/button"
 import { VideoPreview } from "./components/video-preview"
 import { Heading } from "@/components/ui/heading"
 import { AudioVizualizer } from "@/components/common/audio-vizualizer"
+import { AudioToggle } from "../components/aduio-toggle"
+import { NameDisplay } from "../components/name-display"
 
 export default function MeetingPage() {
   const chat = useBoolean()
@@ -56,22 +56,24 @@ export default function MeetingPage() {
       <Chat boolean={chat} /> */}
 
       <div className="flex justify-center items-center w-full h-full gap-12">
-        <div className="relative  w-[720px] h-[420px]">
+        <div className="relative  w-[720px] h-[420px] rounded-[32px] bg-red-500 overflow-hidden">
           <div className="absolute top-0 left-0">
             <VideoPreview />
           </div>
-          <div
-            // controller holder
-            className="absolute bottom-0 left-0 w-full px-4 pb-4"
-          >
+          <div className="absolute bottom-0 left-0 w-full px-3 py-3 bg-gradient-to-t from-black/60 via-black/20 to-transparent  overflow-hidden">
             <div className="flex justify-between w-full items-center">
-              <Text className="text-white font-medium">Some Name</Text>
-              <div className=" flex gap-2">
-                <MicroButton />
+              <div className="w-full">
+                <NameDisplay name="Alex Vyber" />
+              </div>
+
+              <div className=" flex gap-2  w-full justify-center">
+                <AudioToggle />
                 <VideoToggle />
               </div>
 
-              <AudioVizualizer />
+              <div className="w-full flex justify-end">
+                <AudioVizualizer />
+              </div>
             </div>
           </div>
         </div>

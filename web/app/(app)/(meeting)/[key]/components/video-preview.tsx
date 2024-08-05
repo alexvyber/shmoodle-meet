@@ -22,10 +22,6 @@ export function VideoPreview() {
     }
   }, [videoStream])
 
-  if (!videoStream) {
-    return null
-  }
-
   return (
     <video
       ref={videoRef}
@@ -36,7 +32,7 @@ export function VideoPreview() {
         width: 720,
         height: 420,
         objectFit: "cover",
-
+        background: "black",
         transform: "rotateY(180deg)",
       }}
     />
