@@ -11,7 +11,7 @@ import {
 import { Navbar, NavbarItem, NavbarSection, NavbarSpacer } from "@/components/ui/navbar"
 import { Sidebar, SidebarBody, SidebarHeader, SidebarItem, SidebarLabel, SidebarSection } from "@/components/ui/sidebar"
 import { StackedLayout } from "@/components/ui/stacked-layout"
-import { Text } from "@/components/ui/text"
+import { Verse } from "@/components/ui/text"
 import {
   ArrowRightStartOnRectangleIcon,
   ChevronDownIcon,
@@ -71,7 +71,7 @@ export default function ApplicationLayout({ children }: React.PropsWithChildren)
           </div>
 
           <NavbarSpacer />
-          <Text> {DateTime.now().toLocaleString(DateTime.DATETIME_MED)}</Text>
+          <Verse> {DateTime.now().toLocaleString(DateTime.DATETIME_MED)}</Verse>
           <NavbarSpacer />
           <NavbarSection>
             <NavbarItem

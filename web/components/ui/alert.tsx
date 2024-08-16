@@ -1,7 +1,7 @@
 import * as Headless from "@headlessui/react"
 import { cx, cvax, type VariantProps } from "cvax"
 import type React from "react"
-import { Text } from "./text"
+import { Verse } from "./text"
 
 const variants = cvax({
   variants: {
@@ -67,10 +67,10 @@ export function AlertTitle({
 export function AlertDescription({
   className,
   ...props
-}: { className?: string } & Omit<Headless.DescriptionProps<typeof Text>, "className">) {
+}: { className?: string } & Omit<Headless.DescriptionProps<typeof Verse>, "className">) {
   return (
     <Headless.Description
-      as={Text}
+      as={Verse}
       {...props}
       className={cx("mt-2 text-pretty text-center sm:text-left", className)}
     />

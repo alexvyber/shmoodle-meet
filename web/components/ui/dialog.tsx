@@ -1,7 +1,7 @@
 import * as Headless from "@headlessui/react"
 import { cx } from "cvax"
 import type React from "react"
-import { Text } from "./text"
+import { Verse } from "./text"
 
 const sizes = {
   xs: "sm:max-w-xs",
@@ -66,10 +66,10 @@ export function DialogTitle({
 export function DialogDescription({
   className,
   ...props
-}: { className?: string } & Omit<Headless.DescriptionProps<typeof Text>, "className">) {
+}: { className?: string } & Omit<Headless.DescriptionProps<typeof Verse>, "className">) {
   return (
     <Headless.Description
-      as={Text}
+      as={Verse}
       {...props}
       className={cx(className, "mt-2 text-pretty")}
     />

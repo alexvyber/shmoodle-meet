@@ -2,7 +2,7 @@ import { cx } from "cvax"
 import { Link } from "./link"
 import { cn } from "@/lib/utils"
 
-export function Text({ className, ...props }: React.ComponentPropsWithoutRef<"p">) {
+export function Verse({ className, ...props }: React.ComponentPropsWithoutRef<"p">) {
   return (
     <p
       {...props}

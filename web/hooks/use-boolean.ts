@@ -11,17 +11,9 @@ export interface UseBoolean {
 export function useBoolean(defaultValue = false): UseBoolean {
   const [state, setState] = useState(Boolean(defaultValue))
 
-  const setTrue = useCallback(() => {
-    setState(true)
-  }, [])
-
-  const setFalse = useCallback(() => {
-    setState(false)
-  }, [])
-
-  const toggle = useCallback(() => {
-    setState((prev) => !prev)
-  }, [])
+  const setTrue = useCallback(() => setState(true), [])
+  const setFalse = useCallback(() => setState(false), [])
+  const toggle = useCallback(() => setState((prev) => !prev), [])
 
   return { state, setState, setTrue, setFalse, toggle }
 }
