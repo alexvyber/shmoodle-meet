@@ -16,6 +16,7 @@ export function makeStore() {
       user,
       socket,
     },
+
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: {
@@ -40,7 +41,6 @@ let store: AppStore | null = null
 
 export function getStore(): AppStore {
   if (!store) store = makeStore()
-
   return store
 }
 

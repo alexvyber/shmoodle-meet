@@ -15,10 +15,7 @@ export function useWindowDimensions(): WindowDimentions {
 
   useEffect(() => {
     function handleResize() {
-      setWindowDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      })
+      setWindowDimensions({ width: window.innerWidth, height: window.innerHeight })
     }
 
     handleResize()

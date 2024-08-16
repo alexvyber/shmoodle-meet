@@ -7,11 +7,7 @@ export function isNotNull<T>(some: T): some is NonNullable<T> {
   return true
 }
 
-export const logger = pino({
-  level: "error",
-})
-
-export { default as genRoomKey } from "./gen-room-key"
+export const logger = pino({ level: "error" })
 
 export function cn(...classes: ClassValue[]) {
   return twMerge(cx(...classes))

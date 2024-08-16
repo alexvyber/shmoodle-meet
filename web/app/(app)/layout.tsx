@@ -123,7 +123,6 @@ export default function AppLayout({ children }: React.PropsWithChildren) {
       const routerRtpCapabilities = (await socketRequest(
         "get-router-rtp-capabilities"
       )) as mediasoup.types.RtpCapabilities
-      // console.log({ routerRtpCapabilities })
 
       routerRtpCapabilities.headerExtensions = routerRtpCapabilities.headerExtensions?.filter(
         (ext) => ext.uri !== "urn:3gpp:video-orientation"
@@ -154,7 +153,6 @@ export default function AppLayout({ children }: React.PropsWithChildren) {
       const producerTransportParams = (await socketRequest("create-producer-transport", {
         uuid,
       })) as mediasoup.types.TransportOptions
-      // console.log({ producerTransportParams })
       logger.info("producerTransportParams", producerTransportParams)
 
       const producerTransport = device.createSendTransport(producerTransportParams)

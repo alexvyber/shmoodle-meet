@@ -1,6 +1,7 @@
 "use client"
 
 import { useAppSelector } from "@/hooks/use-store"
+import { logger } from "@/lib/utils"
 import { cx } from "cvax"
 import React, { createRef, useEffect, useRef } from "react"
 
@@ -65,14 +66,14 @@ export function AudioVizualizer() {
 }
 
 // TODO: remove - tmp
-// const logLevel = getLogLevel()
+const logLevel = getLogLevel()
 
 function calculateBarHeight(index: number, byteFrequencyData: Uint8Array): number {
   // naive way to get audio level
   const level = byteFrequencyData.reduce((acc, cur) => acc + cur, 0) / byteFrequencyData.length
 
   // TODO: remove - tmp
-  // logLevel(level)
+  logLevel(level)
 
   // the bigger the sensetivity, the bigger noise we need to get 100% bar height
   const sensetivity = 0.15
@@ -91,12 +92,11 @@ function calculateBarHeight(index: number, byteFrequencyData: Uint8Array): numbe
   )
 }
 
-// tmp helper
 function getLogLevel() {
   let max = 0
   return function logLevel(level: number) {
     level > max && (max = level)
 
-    console.log({ level, max })
+    logger.debug({ level, max })
   }
 }

@@ -17,20 +17,12 @@ const variants = cvax({
       "5xl": "sm:max-w-5xl",
     },
   },
-  defaultVariants: {
-    size: "md",
-  },
+  defaultVariants: { size: "md" },
 })
 
-export function Alert({
-  size,
-  className,
-  children,
-  ...props
-}: Omit<Headless.DialogProps, "className"> &
-  React.PropsWithChildren &
-  VariantProps<typeof variants> &
-  Vyber.PropsWithClassname) {
+type Props = Headless.DialogProps & VariantProps<typeof variants> & Vyber.PropsWithClassname
+
+export function Alert({ size, className, children, ...props }: Props) {
   return (
     <Headless.Dialog {...props}>
       <Headless.DialogBackdrop

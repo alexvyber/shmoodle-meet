@@ -11,7 +11,7 @@ function genWord() {
   return str
 }
 
-export default function genRoomKey() {
+export  function genRoomKey() {
   const length = Math.floor(Math.random() * 2) + 3
   return Array.from({ length }, () => genWord()).join("-")
 }

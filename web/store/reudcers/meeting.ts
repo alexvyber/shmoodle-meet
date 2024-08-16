@@ -1,6 +1,6 @@
 "use client"
 
-import { genRoomKey } from "../../lib/utils"
+import {genRoomKey} from "@/lib/utils/gen-room-key"
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
 type MeetingState = {
